@@ -1,6 +1,6 @@
-# NodePilot Linux Node Agent
+# GraphBash Linux Node Agent
 
-> Lightweight and secure Linux execution service for the NodePilot platform.
+> Lightweight and secure Linux execution service for the GraphBash platform.
 
 ![Status](https://img.shields.io/badge/status-foundation-yellow)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue)
@@ -9,7 +9,7 @@
 
 ## Overview
 
-The NodePilot Linux Node Agent runs on a managed Ubuntu machine and exposes a controlled catalogue of system-administration tools to the NodePilot Control Plane.
+The GraphBash Linux Node Agent runs on a managed Ubuntu machine and exposes a controlled catalogue of system-administration tools to the GraphBash Control Plane.
 
 The node agent does not provide unrestricted remote shell access. Each supported operation is implemented as a typed tool with validated parameters, defined permissions, a risk level, a timeout, an output limit, and an audit context.
 
@@ -36,7 +36,7 @@ The agent performs local policy checks before interacting with the operating sys
 
 ```mermaid
 flowchart TD
-    CP[NodePilot Control Plane] -->|Authenticated Tool Request| API[Node Agent API]
+    CP[GraphBash Control Plane] -->|Authenticated Tool Request| API[Node Agent API]
     API --> VERIFY[Verify Identity and Signature]
     VERIFY --> REGISTRY[Local Tool Registry]
     REGISTRY --> POLICY[Local Policy Enforcement]
@@ -224,7 +224,7 @@ State-changing and destructive tools will not be enabled until the approval and 
 ## Planned Repository Structure
 
 ```text
-nodepilot-node-agent/
+GraphBash-node-agent/
 ├── app/
 │   ├── api/
 │   │   └── v1/
@@ -243,7 +243,7 @@ nodepilot-node-agent/
 │   ├── telemetry/
 │   └── main.py
 ├── systemd/
-│   └── nodepilot-agent.service
+│   └── GraphBash-agent.service
 ├── scripts/
 ├── tests/
 │   ├── unit/
@@ -407,17 +407,17 @@ mypy app
 
 ```ini
 [Unit]
-Description=NodePilot Linux Node Agent
+Description=GraphBash Linux Node Agent
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=simple
-User=nodepilot
-Group=nodepilot
-WorkingDirectory=/opt/nodepilot-agent
-EnvironmentFile=/etc/nodepilot-agent.env
-ExecStart=/opt/nodepilot-agent/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 9000
+User=GraphBash
+Group=GraphBash
+WorkingDirectory=/opt/GraphBash-agent
+EnvironmentFile=/etc/GraphBash-agent.env
+ExecStart=/opt/GraphBash-agent/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 9000
 Restart=always
 RestartSec=5
 NoNewPrivileges=true
