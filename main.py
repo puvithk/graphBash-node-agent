@@ -1,6 +1,18 @@
-def main():
-    print("Hello from nodepilot-node-agent!")
+# pyrefly: ignore [missing-import]
+from fastapi import FastAPI
+
+from app.api.router import api_router
+
+app = FastAPI(
+    title="NodePilot Node Agent",
+    version="0.1.0"
+)
+
+app.include_router(api_router)
 
 
-if __name__ == "__main__":
-    main()
+@app.get("/")
+async def root():
+    return {
+        "message": "NodePilot Node Agent is running"
+    }
